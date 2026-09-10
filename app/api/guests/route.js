@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv'
+import { getRedis } from '@/lib/redis'
 
 export const runtime = 'nodejs'
 
@@ -9,11 +9,22 @@ function isAuthorized(req) {
   return cookie.includes('admin_session=ok')
 }
 
+async function readGuests() {
+  const redis = getRedis()
+  const raw = await redis.get(KEY)
+  return raw ? JSON.parse(raw) : []
+}
+
+async function writeGuests(guests) {
+  const redis = getRedis()
+  await redis.set(KEY, JSON.stringify(guests))
+}
+
 export async function GET(req) {
   if (!isAuthorized(req)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  const guests = (await kv.get(KEY)) || []
+  const guests = await readGuests()
   return Response.json({ guests })
 }
 
@@ -28,7 +39,7 @@ export async function POST(req) {
       return Response.json({ error: 'Nama dan nomor WA wajib diisi' }, { status: 400 })
     }
 
-    const guests = (await kv.get(KEY)) || []
+    const guests = await readGuests()
     const newGuest = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
       name: name.trim(),
@@ -36,7 +47,7 @@ export async function POST(req) {
       createdAt: new Date().toISOString(),
     }
     guests.push(newGuest)
-    await kv.set(KEY, guests)
+    await writeGuests(guests)
 
     return Response.json({ guest: newGuest })
   } catch (err) {
@@ -50,9 +61,9 @@ export async function DELETE(req) {
   }
   try {
     const { id } = await req.json()
-    const guests = (await kv.get(KEY)) || []
+    const guests = await readGuests()
     const filtered = guests.filter((g) => g.id !== id)
-    await kv.set(KEY, filtered)
+    await writeGuests(filtered)
     return Response.json({ ok: true })
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 })
