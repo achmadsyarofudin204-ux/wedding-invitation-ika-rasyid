@@ -6,9 +6,13 @@ const DOMAIN_PLACEHOLDER = typeof window !== 'undefined' ? window.location.origi
 
 function buildMessage(name, link) {
   return `Bismillahirrahmanirrahim, Kepada Yth. Bapak/Ibu/Saudara/i ${name}
+
 Tanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk hadir pada acara pernikahan kami. Untuk detail acara, lokasi, dan foto, silakan buka tautan undangan digital berikut:
+
 ${link}
+
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
+
 Kami yang berbahagia, Ika & Rasyid`
 }
 
