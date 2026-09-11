@@ -164,7 +164,7 @@ export default function Page() {
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #5a4a3a; margin-bottom: 20px; }
         .quote { font-size: 0.85rem; color: #666; margin-bottom: 25px; font-style: italic; }
         .couple-profile { margin: 30px 0; }
-        .profile-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #f4f0ea; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        .profile-img { display: block; margin: 0 auto 15px; width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #f4f0ea; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .couple-photo { width: 100%; border-radius: 12px; object-fit: cover; max-height: 320px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
         .couple-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; color: #4a3d31; }
         .couple-parents { font-size: 0.85rem; color: #666; margin-top: 5px; }
